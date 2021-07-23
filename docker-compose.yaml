@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: "team-konekt/laravel-starter-kit"
+    ports:
+      - 8000:80
+      - 8080:8080
+    volumes:
+      - ./:/var/www/html
+    links:
+      - "mysql:mysql"
+    cap_add:
+      - SYS_ADMIN
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "laravel-starter-kit"
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  # phpmyadmin:
+  #   image: "docker.io/bitnami/phpmyadmin:5-debian-10"
+  #   ports:
+  #     - "8080:8083"
+  #     - "8443:8443"
+  #   depends_on:
+  #     - mysql
+  #   links:
+  #     - "mysql:mysql"
+  #   environment:
+  #     - DATABASE_HOST=mysql

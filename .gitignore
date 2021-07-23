@@ -49,3 +49,6 @@
 *.sw*
 
 ściąga.txt
+
+#Docker generated files
+/db
